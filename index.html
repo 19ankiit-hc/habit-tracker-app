@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habitflow — Build Better Days</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">Hf</div>
+      <span class="logo-text">Habitflow</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard">
+        <span class="nav-icon">⬡</span> Dashboard
+      </button>
+      <button class="nav-item" data-view="habits">
+        <span class="nav-icon">◈</span> My Habits
+      </button>
+      <button class="nav-item" data-view="calendar">
+        <span class="nav-icon">◫</span> Calendar
+      </button>
+      <button class="nav-item" data-view="achievements">
+        <span class="nav-icon">◆</span> Achievements
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <span class="theme-icon" id="themeIcon">☽</span>
+        <span id="themeLabel">Light Mode</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ─── MOBILE HEADER ─── -->
+  <header class="mobile-header">
+    <button class="hamburger" id="hamburger">☰</button>
+    <span class="mobile-logo">Habitflow</span>
+    <button class="theme-toggle-mobile" id="themeToggleMobile">☽</button>
+  </header>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main-content">
+
+    <!-- DASHBOARD VIEW -->
+    <section class="view active" id="view-dashboard">
+      <div class="page-header">
+        <div>
+          <p class="page-eyebrow" id="todayDate">Monday, June 7</p>
+          <h1 class="page-title">Good Morning ✦</h1>
+        </div>
+        <button class="btn-primary" id="openAddModal">+ New Habit</button>
+      </div>
+
+      <!-- Quote Banner -->
+      <div class="quote-banner" id="quoteBanner">
+        <span class="quote-mark">"</span>
+        <p class="quote-text" id="quoteText">Loading...</p>
+        <button class="quote-refresh" id="refreshQuote" title="New quote">↻</button>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">◈</div>
+          <div>
+            <p class="stat-label">Total Habits</p>
+            <p class="stat-value" id="statTotal">0</p>
+          </div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-icon">✓</div>
+          <div>
+            <p class="stat-label">Done Today</p>
+            <p class="stat-value" id="statToday">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔥</div>
+          <div>
+            <p class="stat-label">Active Streaks</p>
+            <p class="stat-value" id="statStreaks">0</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">%</div>
+          <div>
+            <p class="stat-label">Completion</p>
+            <p class="stat-value" id="statCompletion">0%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's Habits -->
+      <div class="section-header">
+        <h2 class="section-title">Today's Habits</h2>
+        <div class="filter-bar">
+          <input class="search-input" type="text" id="searchInput" placeholder="Search habits…" />
+          <select class="filter-select" id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Study">Study</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Health">Health</option>
+            <option value="Reading">Reading</option>
+            <option value="Coding">Coding</option>
+            <option value="Personal Development">Personal Dev</option>
+            <option value="Custom">Custom</option>
+          </select>
+          <select class="filter-select" id="statusFilter">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="habits-grid" id="habitsList">
+        <!-- Habit cards rendered here -->
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">◈</div>
+        <h3>No habits yet</h3>
+        <p>Start building your ideal routine by adding your first habit.</p>
+        <button class="btn-primary" id="openAddModal2">+ Add Your First Habit</button>
+      </div>
+    </section>
+
+    <!-- HABITS VIEW -->
+    <section class="view" id="view-habits">
+      <div class="page-header">
+        <div>
+          <p class="page-eyebrow">Manage</p>
+          <h1 class="page-title">My Habits</h1>
+        </div>
+        <button class="btn-primary" id="openAddModal3">+ New Habit</button>
+      </div>
+      <div class="habits-full-list" id="habitsFullList"></div>
+    </section>
+
+    <!-- CALENDAR VIEW -->
+    <section class="view" id="view-calendar">
+      <div class="page-header">
+        <div>
+          <p class="page-eyebrow">History</p>
+          <h1 class="page-title">Completion Calendar</h1>
+        </div>
+      </div>
+      <div class="calendar-container" id="calendarContainer"></div>
+    </section>
+
+    <!-- ACHIEVEMENTS VIEW -->
+    <section class="view" id="view-achievements">
+      <div class="page-header">
+        <div>
+          <p class="page-eyebrow">Milestones</p>
+          <h1 class="page-title">Achievements</h1>
+        </div>
+      </div>
+      <div class="achievements-grid" id="achievementsGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- ─── ADD / EDIT MODAL ─── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">New Habit</h2>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Habit Name</label>
+          <input class="form-input" type="text" id="habitName" placeholder="e.g., Morning Run" maxlength="50" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input" id="habitCategory">
+            <option value="Study">📚 Study</option>
+            <option value="Fitness">💪 Fitness</option>
+            <option value="Health">🥗 Health</option>
+            <option value="Reading">📖 Reading</option>
+            <option value="Coding">💻 Coding</option>
+            <option value="Personal Development">🌱 Personal Development</option>
+            <option value="Custom">✦ Custom</option>
+          </select>
+        </div>
+        <div class="form-group" id="customCategoryGroup" style="display:none;">
+          <label class="form-label">Custom Category Name</label>
+          <input class="form-input" type="text" id="customCategory" placeholder="e.g., Meditation" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Target Days</label>
+          <div class="days-selector" id="daysSelector">
+            <button class="day-btn active" data-day="0">S</button>
+            <button class="day-btn active" data-day="1">M</button>
+            <button class="day-btn active" data-day="2">T</button>
+            <button class="day-btn active" data-day="3">W</button>
+            <button class="day-btn active" data-day="4">T</button>
+            <button class="day-btn active" data-day="5">F</button>
+            <button class="day-btn active" data-day="6">S</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Color Tag</label>
+          <div class="color-picker" id="colorPicker">
+            <button class="color-opt active" data-color="#F59E0B" style="background:#F59E0B;"></button>
+            <button class="color-opt" data-color="#10B981" style="background:#10B981;"></button>
+            <button class="color-opt" data-color="#3B82F6" style="background:#3B82F6;"></button>
+            <button class="color-opt" data-color="#EC4899" style="background:#EC4899;"></button>
+            <button class="color-opt" data-color="#8B5CF6" style="background:#8B5CF6;"></button>
+            <button class="color-opt" data-color="#EF4444" style="background:#EF4444;"></button>
+            <button class="color-opt" data-color="#06B6D4" style="background:#06B6D4;"></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="modalCancel">Cancel</button>
+        <button class="btn-primary" id="modalSave">Save Habit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── DELETE CONFIRM MODAL ─── -->
+  <div class="modal-overlay" id="deleteOverlay">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Delete Habit?</h2>
+        <button class="modal-close" id="deleteClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-secondary);">This will permanently delete <strong id="deleteHabitName" style="color:var(--text-primary);"></strong> and all its history. This cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="deleteCancel">Keep It</button>
+        <button class="btn-danger" id="deleteConfirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── TOAST ─── -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
